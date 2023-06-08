@@ -15,11 +15,13 @@ jobs:
     strategy:
       matrix:
         python: ["3.9","3.10"]
-        platform: [x64]
+        platform: [x64, win32]
         vstudio: [16]
         include:
           - platform: x64
             arch: x64
+          - platform: win32
+            arch: x86
 
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
