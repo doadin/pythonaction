@@ -37,12 +37,6 @@ jobs:
           python-version: ${{ matrix.python }}
           architecture: ${{ matrix.arch }}
 
-      - name: Install Build Deps
-        run: python -m pip install wheel build
-
-      - name: Install gvsbuild tool
-        run: python -m pip install .
-
       - name: Move git binary
         # Temporarily move preinstalled git to prevent errors related to cygwin.
         run: |
@@ -50,4 +44,4 @@ jobs:
           Rename-Item "C:\Program Files\Git\bin" notbin
   
       - name: Python Version
-        run: python -c "import platform; print("platform.architecture() = " , platform.architecture())"
+        run: python -c "import platform; print('platform.architecture() = ' , platform.architecture())"
