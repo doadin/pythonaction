@@ -1,0 +1,51 @@
+name: Release
+
+# Controls when the workflow will run
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: "Enter a gvfsbuild tag or commit to release"
+        default: ""
+
+jobs:
+  build:
+    runs-on: windows-2019
+    strategy:
+      matrix:
+        python: ["3.9","3.10"]
+        platform: [x64]
+        vstudio: [16]
+        include:
+          - platform: x64
+            arch: x64
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v3
+        with:
+          repository: wingtk/gvsbuild
+          fetch-depth: 0
+          ref: ${{ github.event.inputs.ref }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python }}
+          architecture: ${{ matrix.arch }}
+
+      - name: Install Build Deps
+        run: python -m pip install wheel build
+
+      - name: Install gvsbuild tool
+        run: python -m pip install .
+
+      - name: Move git binary
+        # Temporarily move preinstalled git to prevent errors related to cygwin.
+        run: |
+          Rename-Item "C:\Program Files\Git\usr\bin" notbin
+          Rename-Item "C:\Program Files\Git\bin" notbin
+  
+      - name: Python Version
+        run: python -c "import platform; print("platform.architecture() = " , platform.architecture())"
