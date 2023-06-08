@@ -44,4 +44,6 @@ jobs:
           Rename-Item "C:\Program Files\Git\bin" notbin
   
       - name: Python Version
-        run: python -c "import platform; print('platform.architecture() = ' , platform.architecture())"
+        run: |
+            python -c "import platform; print('platform.architecture() = ' , platform.architecture())"
+            python -c 'import struct;print( 8 * struct.calcsize("P"))'
