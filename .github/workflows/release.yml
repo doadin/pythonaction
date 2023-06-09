@@ -35,7 +35,6 @@ jobs:
         run: |
           $path = [System.Environment]::GetEnvironmentVariable('PATH','Machine')
           $path = ($path.Split(';') | Where-Object { $_ -CNOTLike '*Python*' }) -join ';'
-          #[System.Environment]::SetEnvironmentVariable('PATH',$path,'Machine')
           $env:PATH = $path
           $env:Path.Split(';')
           echo "-------------"
@@ -56,9 +55,6 @@ jobs:
   
       - name: Python Version
         run: |
-            $path = [System.Environment]::GetEnvironmentVariable('PATH','Machine')
-            $path = ($path.Split(';') | Where-Object { $_ -CNOTLike '*Python*' }) -join ';'
-            [System.Environment]::SetEnvironmentVariable('PATH',$path,'Machine')
             python -c "import platform; print('platform.architecture() = ' , platform.architecture())"
             python -c "import struct; print( 8 * struct.calcsize('P'))"
             $env:Path.Split(';')
