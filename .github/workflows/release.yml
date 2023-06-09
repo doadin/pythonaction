@@ -57,10 +57,13 @@ jobs:
   
       - name: Python Version
         run: |
+            $path = [System.Environment]::GetEnvironmentVariable('PATH','Machine')
+            $nopythonpath = ($path.Split(';') | Where-Object { $_ -notmatch 'Python' }) -join ';'
+            $pythontoadd = ($path.Split(';') | Where-Object { ($_ -match 'Python\\${{ matrix.python }}') }) -join ';'
+            echo $nopythonpath
+            echo "-----------"
+            echo $pythontoadd
+            echo "-----------"
+            $env:PATH = $pythontoadd;$nopythonpath
             python -c "import platform; print('platform.architecture() = ' , platform.architecture())"
             python -c "import struct; print( 8 * struct.calcsize('P'))"
-            $path = ($path.Split(';') | Where-Object { $_ -CNOTLike '*Python\3.7*\x64*' }) -join ';'
-            $env:PATH = $path
-            $env:Path.Split(';')
-            echo "-------------"
-            $env:PATH.Split(';')
