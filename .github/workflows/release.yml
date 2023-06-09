@@ -37,6 +37,7 @@ jobs:
           $path = ($path.Split(';') | Where-Object { $_ -ne 'python' }) -join ';'
           $path.split(";")
           $env:PATH = $path
+          echo "$PATH"
 
       - name: Set up Python
         uses: actions/setup-python@v4
