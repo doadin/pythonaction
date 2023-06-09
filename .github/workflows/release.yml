@@ -41,12 +41,7 @@ jobs:
         run: |
             $path = [System.Environment]::GetEnvironmentVariable('PATH','Machine')
             $nopythonpath = ($path.Split(';') | Where-Object { $_ -notmatch 'Python' }) -join ';'
-            #$pythontoadd = ($path.Split(';') | Where-Object { ($_ -match "\\Python\\${{ matrix.python }}") }) -join ';'
             $pythontoadd = "${{ env.pythonLocation }};${{ env.pythonLocation }}\Scripts"
-            echo $nopythonpath
-            echo "-----------"
-            echo $pythontoadd
-            echo "-----------"
-            #$env:PATH = $pythontoadd;$nopythonpath
+            $env:PATH = $pythontoadd;$nopythonpath
             python -c "import platform; print('platform.architecture() = ' , platform.architecture())"
             python -c "import struct; print( 8 * struct.calcsize('P'))"
