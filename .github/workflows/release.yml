@@ -35,7 +35,8 @@ jobs:
         run: |
           $path = [System.Environment]::GetEnvironmentVariable('PATH','Machine')
           $path = ($path.Split(';') | Where-Object { $_ -ne "Python" }) -join ';'
-          $env:Path = $path
+          $path.split(";")
+          $env:PATH = $path
 
       - name: Set up Python
         uses: actions/setup-python@v4
