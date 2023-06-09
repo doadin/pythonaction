@@ -30,6 +30,12 @@ jobs:
           repository: wingtk/gvsbuild
           fetch-depth: 0
           ref: ${{ github.event.inputs.ref }}
+  
+      - name: Fix PATH
+        run: |
+          $path = [System.Environment]::GetEnvironmentVariable('PATH','Machine')
+          $path = ($path.Split(';') | Where-Object { $_ -ne 'python' }) -join ';'
+          [System.Environment]::SetEnvironmentVariable('PATH',$path,'Machine')
 
       - name: Set up Python
         uses: actions/setup-python@v4
