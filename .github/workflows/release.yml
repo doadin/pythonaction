@@ -34,7 +34,8 @@ jobs:
       - name: Fix PATH
         run: |
           $path = [System.Environment]::GetEnvironmentVariable('PATH','Machine')
-          $path = ($path.Split(';') | Where-Object { $_ -CNOTLike '*Python\${{ matrix.python }}.*\${{ matrix.arch }}*' }) -join ';'
+          #$path = ($path.Split(';') | Where-Object { $_ -CNOTLike '*Python\${{ matrix.python }}.*\${{ matrix.arch }}*' }) -join ';'
+          $path = ($path.Split(';') | Where-Object { $_ -CNOTLike '*Python*' }) -join ';'
           $env:PATH = $path
           $env:Path.Split(';')
           echo "-------------"
@@ -57,7 +58,7 @@ jobs:
         run: |
             python -c "import platform; print('platform.architecture() = ' , platform.architecture())"
             python -c "import struct; print( 8 * struct.calcsize('P'))"
-            $path = ($path.Split(';') | Where-Object { $_ -CNOTLike $env:pythonLocation }) -join ';'
+            $path = ($path.Split(';') | Where-Object { $_ -CNOTLike '*Python\3.7*\x64*' }) -join ';'
             $env:PATH = $path
             $env:Path.Split(';')
             echo "-------------"
