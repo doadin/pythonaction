@@ -57,7 +57,7 @@ jobs:
         run: |
             python -c "import platform; print('platform.architecture() = ' , platform.architecture())"
             python -c "import struct; print( 8 * struct.calcsize('P'))"
-            $path = ($path.Split(';') | Where-Object { $_ -CNOTLike $pythonLocation }) -join ';'
+            $path = ($path.Split(';') | Where-Object { $_ -CNOTLike $env:pythonLocation }) -join ';'
             $env:PATH = $path
             $env:Path.Split(';')
             echo "-------------"
