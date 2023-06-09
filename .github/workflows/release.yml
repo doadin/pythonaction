@@ -42,7 +42,7 @@ jobs:
             $path = [System.Environment]::GetEnvironmentVariable('PATH','Machine')
             $nopythonpath = ($path.Split(';') | Where-Object { $_ -notmatch 'Python' }) -join ';'
             #$pythontoadd = ($path.Split(';') | Where-Object { ($_ -match "\\Python\\${{ matrix.python }}") }) -join ';'
-            $pythontoadd = ${{ env.pythonLocation }}
+            $pythontoadd = "${{ env.pythonLocation }};${{ env.pythonLocation }}\Scripts"
             echo $nopythonpath
             echo "-----------"
             echo $pythontoadd
