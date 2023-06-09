@@ -43,5 +43,6 @@ jobs:
             $nopythonpath = ($path.Split(';') | Where-Object { $_ -notmatch 'Python' }) -join ';'
             $pythontoadd = "${{ env.pythonLocation }}"
             $env:PATH = "$pythontoadd;$nopythonpath"
+            $env:PATH.split(";")
             python -c "import platform; print('platform.architecture() = ' , platform.architecture())"
             python -c "import struct; print( 8 * struct.calcsize('P'))"
