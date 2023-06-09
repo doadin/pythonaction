@@ -36,7 +36,7 @@ jobs:
           $path = [System.Environment]::GetEnvironmentVariable('PATH','Machine')
           $path = ($path.Split(';') | Where-Object { $_ -CNOTLike '*Python*' }) -join ';'
           #[System.Environment]::SetEnvironmentVariable('PATH',$path,'Machine')
-          $PATH = $path
+          $env:PATH = $path
           $env:Path.Split(';')
           echo "-------------"
           $env:PATH.Split(';')
