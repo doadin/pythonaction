@@ -30,36 +30,18 @@ jobs:
           repository: wingtk/gvsbuild
           fetch-depth: 0
           ref: ${{ github.event.inputs.ref }}
-  
-      - name: Fix PATH
-        run: |
-          $path = [System.Environment]::GetEnvironmentVariable('PATH','Machine')
-          #$path = ($path.Split(';') | Where-Object { $_ -CNOTLike '*Python\${{ matrix.python }}.*\${{ matrix.arch }}*' }) -join ';'
-          $nopythonpath = ($path.Split(';') | Where-Object { $_ -notmatch 'Python' }) -join ';'
-          $pythontoadd = ($path.Split(';') | Where-Object { ($_ -match 'Python\\${{ matrix.python }}') }) -join ';'
-          echo $nopythonpath
-          echo "-----------"
-          echo $pythontoadd
-          echo "-----------"
-          $env:PATH = $pythontoadd;$nopythonpath
 
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python }}
           architecture: ${{ matrix.arch }}
-
-      - name: Move git binary
-        # Temporarily move preinstalled git to prevent errors related to cygwin.
-        run: |
-          Rename-Item "C:\Program Files\Git\usr\bin" notbin
-          Rename-Item "C:\Program Files\Git\bin" notbin
   
       - name: Python Version
         run: |
             $path = [System.Environment]::GetEnvironmentVariable('PATH','Machine')
             $nopythonpath = ($path.Split(';') | Where-Object { $_ -notmatch 'Python' }) -join ';'
-            $pythontoadd = ($path.Split(';') | Where-Object { ($_ -match 'Python\\${{ matrix.python }}') }) -join ';'
+            $pythontoadd = ($path.Split(';') | Where-Object { ($_ -match "Python\\${{ matrix.python }}") }) -join ';'
             echo $nopythonpath
             echo "-----------"
             echo $pythontoadd
