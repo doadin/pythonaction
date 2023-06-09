@@ -35,8 +35,9 @@ jobs:
         run: |
           $path = [System.Environment]::GetEnvironmentVariable('PATH','Machine')
           #$path = ($path.Split(';') | Where-Object { $_ -CNOTLike '*Python\${{ matrix.python }}.*\${{ matrix.arch }}*' }) -join ';'
-          $path = ($path.Split(';') | Where-Object { $_ -CNOTLike '*Python*' }) -join ';'
-          $env:PATH = $path
+          $nopythonpath = ($path.Split(';') | Where-Object { $_ -notmatch 'Python' }) -join ';'
+          $pythontoadd = ($path.Split(';') | Where-Object { ($_ -match 'Python\\${{ matrix.python }}') }) -join ';'
+          $env:PATH = $pythontoadd;$nopythonpath
           $env:Path.Split(';')
           echo "-------------"
           $env:PATH.Split(';')
