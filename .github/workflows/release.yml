@@ -34,7 +34,7 @@ jobs:
       - name: Fix PATH
         run: |
           $path = [System.Environment]::GetEnvironmentVariable('PATH','Machine')
-          $path = ($path.Split(';') | Where-Object { $_ -CNOTLike '*Python\${{ matrix.python }}.*\${{ matrix.arch }}*' }) -join ';'
+          $path = ($path.Split(';') | Where-Object { $_ -CNOTLike $pythonLocation }) -join ';'
           $env:PATH = $path
           $env:Path.Split(';')
           echo "-------------"
