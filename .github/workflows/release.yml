@@ -37,9 +37,11 @@ jobs:
           #$path = ($path.Split(';') | Where-Object { $_ -CNOTLike '*Python\${{ matrix.python }}.*\${{ matrix.arch }}*' }) -join ';'
           $nopythonpath = ($path.Split(';') | Where-Object { $_ -notmatch 'Python' }) -join ';'
           $pythontoadd = ($path.Split(';') | Where-Object { ($_ -match 'Python\\${{ matrix.python }}') }) -join ';'
+          echo $nopythonpath
+          echo "-----------"
+          echo $pythontoadd
+          echo "-----------"
           $env:PATH = $pythontoadd;$nopythonpath
-          $env:PATH.Split(';')
-          echo "-------------"
 
       - name: Set up Python
         uses: actions/setup-python@v4
